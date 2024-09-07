@@ -14,7 +14,6 @@
   ],
   "main": "./extension.js",
   "contributes": {
-
     "commands": [
       {
         "command": "csmanager.helloWorld",
@@ -33,7 +32,6 @@
         "title": "CSManager: Configuration"
       }
     ],
-
     "configuration": {
       "type": "object",
       "properties": {
@@ -43,8 +41,8 @@
           "description": "Servidor de base de dados."
         },
         "csManager.port": {
-          "type": "number",
-          "default": 1433,
+          "type": "string",
+          "default": "1433",
           "description": "Porta do servidor de base de dados."
         },
         "csManager.user": {
@@ -64,7 +62,6 @@
         }
       }
     }
-
   },
   "scripts": {
     "lint": "eslint .",
@@ -78,5 +75,8 @@
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.4.1",
     "eslint": "^9.9.1"
+  },
+  "dependencies": {
+    "mssql": "^11.0.1"
   }
 }

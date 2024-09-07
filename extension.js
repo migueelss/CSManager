@@ -24,7 +24,6 @@ function activate(context) {
 	context.subscriptions.push(disposable);
 	context.subscriptions.push(openGUI);
 	context.subscriptions.push(pullCommand);
-	context.subscriptions.push(checkConfiguration);
 }
 
 // This method is called when your extension is deactivated
