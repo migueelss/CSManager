@@ -59,39 +59,21 @@ async function showPullOptions() {
     }
 
     const workspacePath = vscode.workspace.workspaceFolders[0].uri.fsPath;
-    console.log("PullScripts:")
-    console.log(pullScripts)
+    
     pullScripts.forEach(item => {
-        fs.access(path.join(workspacePath, item.folder), fs.constants.F_OK, (err) => {
-            if (err) {
-                fs.mkdir(path.join(workspacePath, item.folder), { recursive: true}, (err) => {
-                    if (err) {
-                        vscode.window.showErrorMessage(`Erro ao criar a pasta "${item.folder}": ${err.message}`);
-                    } else {
-                        vscode.window.showInformationMessage(`A pasta "${item.folder}" foi criada com sucesso.`);
-                    }
-                });
-            }
-            fs.access(path.join(workspacePath, item.folder, `/${item.label}/`), fs.constants.F_OK, (err) => {
-                if (err) {
-                    fs.mkdir(path.join(workspacePath, item.folder, `/${item.label}/`), { recursive: true}, (err) => {
-                        if (err) {
-                            return;
-                        }
-                    });
-                }
-                fs.writeFile(path.join(workspacePath, item.folder, `/${item.label}/`,(item.id+item.extension)), item.code, (err) => {
-                    if (err) {
-                        vscode.window.showErrorMessage(`Erro ao receber o script "${item.label}": ${err.message}`);
-                    }
-                });
+        const folderPath = path.join(workspacePath, item.folder);
+        const scriptFolderPath = path.join(folderPath, item.label);
+        const filePath = path.join(scriptFolderPath, item.id + item.extension);
+    
+        ensureDirectoryExists(folderPath, () => {
+            ensureDirectoryExists(scriptFolderPath, () => {
+                writeFile(filePath, item.code);
             });
         });
     });
 }
 
 async function listPullFiles(query) {
-    
     try {
         
         let pool = await sql.connect(getDBConfig());
@@ -115,6 +97,23 @@ async function listPullFiles(query) {
     }
 }
 
+function ensureDirectoryExists(dirPath, callback) {
+    fs.mkdir(dirPath, { recursive: true }, (err) => {
+        if (err) {
+            vscode.window.showErrorMessage(`Erro ao criar a pasta "${dirPath}": ${err.message}`);
+        } else {
+            callback();
+        }
+    });
+}
+
+function writeFile(filePath, content) {
+    fs.writeFile(filePath, content, (err) => {
+        if (err) {
+            vscode.window.showErrorMessage(`Erro ao receber o script "${path.basename(filePath)}": ${err.message}`);
+        }
+    });
+}
 
 module.exports = {
     pullCommand
