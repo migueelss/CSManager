@@ -59,7 +59,10 @@ async function showPullOptions() {
             break;
     }
 
-    if (!pScripts) {return;}
+    if (!pScripts) {
+        showPullOptions();    
+        return;
+    }
 
     if (pScripts.length == 0) {
         vscode.window.showInformationMessage('Não selecionou nenhum script.');
