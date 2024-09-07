@@ -21,7 +21,6 @@ const pullCommand = vscode.commands.registerCommand('csmanager.pull', function (
 });
 
 async function showPullOptions() {
-    //const pullFiles = await listPullFiles();
 
     const pickCategories = [
         { label: "Todos os scripts de Framework", id: "all"},
@@ -36,7 +35,7 @@ async function showPullOptions() {
     if (!selectedCategory) {return;}
 
     let pickScripts = [];
-    let pullScripts = [];
+    let pScripts = [];
 
     switch (selectedCategory.id) {
         case "all":
@@ -44,33 +43,20 @@ async function showPullOptions() {
         case "jsUser":
             pickScripts = await listPullFiles(pull_queryjsUser);
             
-            pullScripts = await vscode.window.showQuickPick(pickScripts, {
+            pScripts = await vscode.window.showQuickPick(pickScripts, {
                 placeHolder: "Javascript de Utilizador",
                 canPickMany: true,
             });
-            console.log(pullScripts);
     }
 
-    if (!pullScripts) {return;}
+    if (!pScripts) {return;}
 
-    if (pullScripts.length == 0) {
+    if (pScripts.length == 0) {
         vscode.window.showInformationMessage('Não selecionou nenhum script.');
         return;
     }
 
-    const workspacePath = vscode.workspace.workspaceFolders[0].uri.fsPath;
-    
-    pullScripts.forEach(item => {
-        const folderPath = path.join(workspacePath, item.folder);
-        const scriptFolderPath = path.join(folderPath, item.label);
-        const filePath = path.join(scriptFolderPath, item.id + item.extension);
-    
-        ensureDirectoryExists(folderPath, () => {
-            ensureDirectoryExists(scriptFolderPath, () => {
-                writeFile(filePath, item.code);
-            });
-        });
-    });
+    await pullScripts(pScripts);
 }
 
 async function listPullFiles(query) {
@@ -112,6 +98,22 @@ function writeFile(filePath, content) {
         if (err) {
             vscode.window.showErrorMessage(`Erro ao receber o script "${path.basename(filePath)}": ${err.message}`);
         }
+    });
+}
+
+function pullScripts(pScripts) {
+    const workspacePath = vscode.workspace.workspaceFolders[0].uri.fsPath;
+    
+    pScripts.forEach(item => {
+        const folderPath = path.join(workspacePath, item.folder);
+        const scriptFolderPath = path.join(folderPath, item.label);
+        const filePath = path.join(scriptFolderPath, item.id + item.extension);
+    
+        ensureDirectoryExists(folderPath, () => {
+            ensureDirectoryExists(scriptFolderPath, () => {
+                writeFile(filePath, item.code);
+            });
+        });
     });
 }
 
