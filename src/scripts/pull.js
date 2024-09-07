@@ -23,7 +23,7 @@ const pullCommand = vscode.commands.registerCommand('csmanager.pull', function (
 async function showPullOptions() {
 
     const pickCategories = [
-        { label: "Todos os scripts de Framework", id: "all"},
+        { label: "Importar TODOS os scripts de Framework", id: "all"},
         { label: "Javascript de Utilizador", id: "jsUser"},
     ];
 
