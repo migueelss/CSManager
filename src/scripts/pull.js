@@ -4,7 +4,7 @@ const path = require('path');
 const { checkConfiguration } = require ('./checkConfiguration');
 const sql = require('mssql');
 const { getDBConfig } = require('./dbconfig');
-const { pull_queryjsUser } = require ('./queries');
+const { pull_queryjsUser, pull_queryvbWebScripts } = require ('./queries');
 
 const pullCommand = vscode.commands.registerCommand('csmanager.pull', function () {
     if (checkConfiguration()) {
@@ -25,6 +25,7 @@ async function showPullOptions() {
     const pickCategories = [
         { label: "Importar TODOS os scripts de Framework", id: "all"},
         { label: "Javascript de Utilizador", id: "jsUser"},
+        { label: "Scripts Web (VB.NET)", id: "vbScriptsWeb"}
     ];
 
     const selectedCategory = await vscode.window.showQuickPick(pickCategories, {
@@ -47,6 +48,15 @@ async function showPullOptions() {
                 placeHolder: "Javascript de Utilizador",
                 canPickMany: true,
             });
+            break;
+        case "vbScriptsWeb":
+            pickScripts = await listPullFiles(pull_queryvbWebScripts);
+            
+            pScripts = await vscode.window.showQuickPick(pickScripts, {
+                placeHolder: "Scripts Web (VB.NET)",
+                canPickMany: true,
+            });
+            break;
     }
 
     if (!pScripts) {return;}
