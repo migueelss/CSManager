@@ -74,10 +74,9 @@ async function listPullFiles(query) {
             extension: row.extension
         }));
 
-        console.log(result.recordset);
         return formatResult;
     } catch (err) {
-        console.log(err);
+        vscode.window.showErrorMessage(`Erro: ${err}`);
     } finally {
         sql.close();
     }
