@@ -3,6 +3,7 @@ const vscode = require('vscode');
 const {
 	openGUI,
 	pullCommand, 
+	pushCommand,
 	configuration
 } = require('./src/scripts/scripts');
 const {	checkConfiguration } = require("./src/scripts/checkConfiguration");
@@ -24,6 +25,7 @@ function activate(context) {
 	context.subscriptions.push(disposable);
 	context.subscriptions.push(openGUI);
 	context.subscriptions.push(pullCommand);
+	context.subscriptions.push(pushCommand);
 }
 
 // This method is called when your extension is deactivated

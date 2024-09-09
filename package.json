@@ -28,6 +28,10 @@
         "title": "CSManager: Pull"
       },
       {
+        "command": "csmanager.push",
+        "title": "CSManager: Push"
+      },
+      {
         "command": "csmanager.configuration",
         "title": "CSManager: Configuration"
       }
