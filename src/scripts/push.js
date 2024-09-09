@@ -9,7 +9,7 @@ const { getDBConfig } = require('./dbconfig');
 const mapTables = new Map([
     ["/javascriptUtilizador/", "jsu"],
     ["/vbScriptsWeb/", "escr"],
-    ["/monitores/", "emoi"],
+    ["/itensMonitor/", "emoi"],
 ])
 
 const pushCommand = vscode.commands.registerCommand('csmanager.push', function () {
@@ -62,7 +62,7 @@ async function showPushOptions() {
             });
             break;
         case "vbMonitores":
-            pickScripts = await listPushFiles('/monitores/');
+            pickScripts = await listPushFiles('/itensMonitor/');
             
             pScripts = await vscode.window.showQuickPick(pickScripts, {
                 placeHolder: "Monitores",
@@ -87,6 +87,11 @@ async function showPushOptions() {
 async function listPushFiles(folder) {
     const workspacePath = vscode.workspace.workspaceFolders[0].uri.fsPath;
 
+
+    if (!fs.existsSync(path.join(workspacePath, folder))) {
+        vscode.window.showErrorMessage(`Não encontrei nada em ${folder}`);
+        return
+    }
     fScripts = fs.readdirSync(path.join(workspacePath, folder)).filter(file => {
         return fs.statSync(path.join(workspacePath, folder, file)).isDirectory();
     });
