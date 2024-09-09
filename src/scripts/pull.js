@@ -143,10 +143,6 @@ function pullScripts(pScripts) {
     });
 }
 
-/*function formatScriptCode(code) {
-    var formattedCode = code.split('/@!/');
-}*/
-
 module.exports = {
     pullCommand
 }
