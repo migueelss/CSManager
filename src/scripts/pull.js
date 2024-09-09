@@ -91,10 +91,10 @@ async function listPullFiles(query) {
         let formatResult = result.recordset.map(row => ({
             label: row.name,
             id: row.stamp,
-            code: row.code.split('/@!/'),
+            code: row.code.split('/@!barreira#bRrieR*>/'),
             folder: row.folder,
             extension: row.extension,
-            col: row.type.split('/@!/')
+            col: row.type.split('/@!barreira#bRrieR*>/')
         }));
 
         return formatResult;
