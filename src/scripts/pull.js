@@ -4,7 +4,7 @@ const path = require('path');
 const { checkConfiguration } = require ('./checkConfiguration');
 const sql = require('mssql');
 const { getDBConfig } = require('./dbconfig');
-const { pull_queryjsUser, pull_queryvbWebScripts } = require ('./queries');
+const { pull_queryjsUser, pull_queryvbWebScripts, pull_queryMonitores } = require ('./queries');
 
 const pullCommand = vscode.commands.registerCommand('csmanager.pull', function () {
     if (checkConfiguration()) {
@@ -25,7 +25,8 @@ async function showPullOptions() {
     const pickCategories = [
         { label: "Importar TODOS os scripts de Framework", id: "all"},
         { label: "Javascript de Utilizador", id: "jsUser"},
-        { label: "Scripts Web (VB.NET)", id: "vbScriptsWeb"}
+        { label: "Scripts Web (VB.NET)", id: "vbScriptsWeb"},
+        { label: "Monitores", id: "vbMonitores"}
     ];
 
     const selectedCategory = await vscode.window.showQuickPick(pickCategories, {
@@ -57,6 +58,14 @@ async function showPullOptions() {
                 canPickMany: true,
             });
             break;
+        case "vbMonitores":
+            pickScripts = await listPullFiles(pull_queryMonitores);
+            
+            pScripts = await vscode.window.showQuickPick(pickScripts, {
+                placeHolder: "Monitores",
+                canPickMany: true,
+            });
+            break;
     }
 
     if (!pScripts) {
@@ -82,9 +91,10 @@ async function listPullFiles(query) {
         let formatResult = result.recordset.map(row => ({
             label: row.name,
             id: row.stamp,
-            code: row.code,
+            code: row.code.split('/@!/'),
             folder: row.folder,
-            extension: row.extension
+            extension: row.extension,
+            col: row.type.split('/@!/')
         }));
 
         return formatResult;
@@ -119,15 +129,23 @@ function pullScripts(pScripts) {
     pScripts.forEach(item => {
         const folderPath = path.join(workspacePath, item.folder);
         const scriptFolderPath = path.join(folderPath, item.label);
-        const filePath = path.join(scriptFolderPath, item.id + item.extension);
+        const idPath = path.join(scriptFolderPath, item.id)
     
         ensureDirectoryExists(folderPath, () => {
             ensureDirectoryExists(scriptFolderPath, () => {
-                writeFile(filePath, item.code);
+                writeFile(idPath, "");
+                item.col.forEach((value, index) => {
+                    var filePath = path.join(scriptFolderPath, value + item.extension);
+                    writeFile(filePath, item.code[index]);
+                });
             });
         });
     });
 }
+
+/*function formatScriptCode(code) {
+    var formattedCode = code.split('/@!/');
+}*/
 
 module.exports = {
     pullCommand
