@@ -9,6 +9,7 @@ module.exports = {
     openGUI,
     pullCommand,
     pushCommand,
+    submitCommand,
     checkConfiguration,
     configuration
 }
