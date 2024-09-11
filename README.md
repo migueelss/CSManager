@@ -33,6 +33,7 @@ Após instalar o **CS Manager**, podes começar a usá-lo seguindo estes passos:
 1. Abre a **Linha de Comandos do Visual Studio Code** através da barra de pesquisa na parte superior do ecrã do VSCode e escolhe a opção `Mostrar e Executar Comandos >`, ou simplesmente digita um `>`. Em alternativa, existe o atalho `Ctrl+Shift+P`.
 2. Pesquisa por **CSManager** e serão apresentados todos os comandos da extensão. <br><img src="https://i.imgur.com/QDD0KkO.gif">
 <br>
+
 > 🚨 **Aviso Importante:** NUNCA edite o nome de algum arquivo/diretório criado pelo CSManager.
 
 ## ⚙️ Configurações Importantes de Servidor
