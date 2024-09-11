@@ -10,7 +10,7 @@ const mapTables = new Map([
     ["/javascriptUtilizador/", "jsu"],
     ["/vbScriptsWeb/", "escr"],
     ["/itensMonitor/", "emoi"],
-])
+]);
 
 const pushCommand = vscode.commands.registerCommand('csmanager.push', function () {
     if (checkConfiguration()) {
@@ -29,7 +29,7 @@ const pushCommand = vscode.commands.registerCommand('csmanager.push', function (
 async function showPushOptions() {
 
     const pickCategories = [
-        { label: "Enviar TODOS os scripts de Framework", id: "all"},
+        //{ label: "Enviar TODOS os scripts de Framework", id: "all"},
         { label: "Javascript de Utilizador", id: "jsUser"},
         { label: "Scripts Web (VB.NET)", id: "vbScriptsWeb"},
         { label: "Monitores", id: "vbMonitores"}
@@ -124,11 +124,9 @@ async function pushScripts(pScripts) {
                     WHERE ${mapTables.get(item.type)}stamp LIKE '%${pScriptSTAMP}%'`
                 );
 
-                
-
                 sql.close();
             } catch (err) {
-                console.error('Error processing file:', pFile, err);
+                console.error('Erro ao processar o ficheiro:', pFile, err);
             }
         }
     }

@@ -2,7 +2,8 @@
   "name": "csmanager",
   "displayName": "CSManager",
   "description": "Extensão para apoio ao desenvolvimento na PHC CS Framework.",
-  "version": "0.0.1",
+  "publisher": "migueelss",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.92.0"
   },
@@ -30,6 +31,10 @@
       {
         "command": "csmanager.push",
         "title": "CSManager: Push"
+      },
+      {
+        "command": "csmanager.submit",
+        "title": "CSManager: Submit Current File"
       },
       {
         "command": "csmanager.configuration",

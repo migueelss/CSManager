@@ -4,6 +4,7 @@ const {
 	openGUI,
 	pullCommand, 
 	pushCommand,
+	submitCommand,
 	configuration
 } = require('./src/scripts/scripts');
 const {	checkConfiguration } = require("./src/scripts/checkConfiguration");

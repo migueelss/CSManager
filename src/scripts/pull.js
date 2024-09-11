@@ -23,7 +23,7 @@ const pullCommand = vscode.commands.registerCommand('csmanager.pull', function (
 async function showPullOptions() {
 
     const pickCategories = [
-        { label: "Receber TODOS os scripts de Framework", id: "all"},
+        //{ label: "Receber TODOS os scripts de Framework", id: "all"},
         { label: "Javascript de Utilizador", id: "jsUser"},
         { label: "Scripts Web (VB.NET)", id: "vbScriptsWeb"},
         { label: "Monitores", id: "vbMonitores"}
