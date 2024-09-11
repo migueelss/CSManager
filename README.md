@@ -60,4 +60,4 @@ Ou, em alternativa, uma forma mais prática para alguns, editar diretamente nas 
 
 N/A
 
-Se tiveres problemas que não consegues resolver, não hesites em abrir uma issue no repositório do GitHub.
+Se tiveres problemas que não consegues resolver, não hesites em abrir uma [issue](https://github.com/migueelss/CSManager/issues) no repositório do GitHub.
