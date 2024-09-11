@@ -36,6 +36,15 @@ Após instalar o **CS Manager**, podes começar a usá-lo seguindo estes passos:
 
 > 🚨 **Aviso Importante:** NUNCA edite o nome de algum arquivo/diretório criado pelo CSManager.
 
+## 🧰 Configurações Iniciais da Extensão
+Para garantir que a extensão possa comunicar eficazmente com o servidor de base de dados, é essencial configurar as informações de acesso ao Microsoft SQL Server nas configurações globais da extensão. Preencha estes detalhes para uma integração perfeita e um fluxo de trabalho sem interrupções.
+
+Pode fazê-lo através do comando `CSManager: Configuration`.<br>
+Ou, em alternativa, uma forma mais prática para alguns, editar diretamente nas `Definições` do Visual Studio Code.
+1. No menu superior, clique em `Ficheiro` e depois em `Preferências`.
+2. No submenu que aparece, selecione "Configurações" (ou utilize o atalho de teclado `Ctrl+,`).
+3. Na barra de pesquisas, procure por `csmanager` e preencha todos os campos de configuração da extensão. <br> <img src="https://i.imgur.com/zRKXF0B.png">
+
 ## ⚙️ Configurações Importantes de Servidor
 > ### Ligar o SQL Server Browser (Através do SQL Server Configuration Manager)
 > <img src="https://i.imgur.com/uhGc2dU.png">
