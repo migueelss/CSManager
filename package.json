@@ -3,7 +3,7 @@
   "displayName": "CSManager",
   "description": "Extensão para apoio ao desenvolvimento na PHC CS Framework.",
   "publisher": "migueelss",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "engines": {
     "vscode": "^1.92.0"
   },
