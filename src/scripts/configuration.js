@@ -8,8 +8,9 @@ const configuration = vscode.commands.registerCommand('csmanager.configuration',
     // Função para exibir o InputBox e atualizar a configuração
     async function promptInput(prompt, key) {
         const value = await vscode.window.showInputBox({
-          prompt,
+          prompt: prompt,
           placeHolder: config.get(key),
+          ignoreFocusOut: true,
           validateInput: (input) => {
             if (!input || input === '' || !hasNonWhitespaceCharacters(input)) {
               return "O campo não pode estar vazio!";
