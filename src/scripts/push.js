@@ -10,6 +10,7 @@ const mapTables = new Map([
     ["/javascriptUtilizador/", "jsu"],
     ["/vbScriptsWeb/", "escr"],
     ["/itensMonitor/", "emoi"],
+    ["/objetosEcra/", "epagc"]
 ]);
 
 const pushCommand = vscode.commands.registerCommand('csmanager.push', function () {
@@ -30,9 +31,10 @@ async function showPushOptions() {
 
     const pickCategories = [
         //{ label: "Enviar TODOS os scripts de Framework", id: "all"},
-        { label: "Javascript de Utilizador", id: "jsUser"},
-        { label: "Scripts Web (VB.NET)", id: "vbScriptsWeb"},
-        { label: "Monitores", id: "vbMonitores"}
+        { label: "Javascript de Utilizador", id: "/javascriptUtilizador/"},
+        { label: "Scripts Web (VB.NET)", id: "/vbScriptsWeb/"},
+        { label: "Monitores", id: "/itensMonitor/"},
+        { label: "Objetos de Ecrã", id: "/objetosEcra/"}
     ];
     
     const selectedCategory = await vscode.window.showQuickPick(pickCategories, {
@@ -42,34 +44,12 @@ async function showPushOptions() {
 
     if (!selectedCategory) {return;}
 
-    switch (selectedCategory.id) {
-        case "all":
-            break;
-        case "jsUser":
-            pickScripts = await listPushFiles('/javascriptUtilizador/');
-            
-            pScripts = await vscode.window.showQuickPick(pickScripts, {
-                placeHolder: "Javascript de Utilizador",
-                canPickMany: true,
-            });
-            break;
-        case "vbScriptsWeb":
-            pickScripts = await listPushFiles('/vbScriptsWeb/');
-            
-            pScripts = await vscode.window.showQuickPick(pickScripts, {
-                placeHolder: "Scripts Web (VB.NET)",
-                canPickMany: true,
-            });
-            break;
-        case "vbMonitores":
-            pickScripts = await listPushFiles('/itensMonitor/');
-            
-            pScripts = await vscode.window.showQuickPick(pickScripts, {
-                placeHolder: "Monitores",
-                canPickMany: true,
-            });
-            break;
-    }
+    pickScripts = await listPushFiles(selectedCategory.id);
+
+    pScripts = await vscode.window.showQuickPick(pickScripts, {
+        placeHolder: selectedCategory.label,
+        canPickMany: true,
+    });
 
     if (!pScripts) {
         showPushOptions();    
@@ -82,6 +62,7 @@ async function showPushOptions() {
     }
 
     await pushScripts(pScripts);
+    vscode.window.showInformationMessage('Script(s) submetido(s).');
 }
 
 async function listPushFiles(folder) {

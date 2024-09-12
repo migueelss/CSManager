@@ -9,6 +9,7 @@ const mapTables = new Map([
     ["/javascriptUtilizador/", "jsu"],
     ["/vbScriptsWeb/", "escr"],
     ["/itensMonitor/", "emoi"],
+    ["/objetosEcra/", "epagc"]
 ]);
 
 
@@ -50,6 +51,7 @@ async function pushScript(pScript) {
         SET ${path.basename(pScriptPath).split('.').slice(0, -1).join('.')} = @fileCode
         WHERE ${mapTables.get(`/${path.basename(path.dirname(path.dirname(pScriptPath)))}/`)}stamp LIKE '%${pScriptSTAMP}%'`
     );
+    vscode.window.showInformationMessage('Script submetido.');
     } catch {
         vscode.window.showErrorMessage("Erro ao gravar o script!");
     } finally {

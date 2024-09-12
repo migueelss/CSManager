@@ -4,7 +4,7 @@ const path = require('path');
 const { checkConfiguration } = require ('./checkConfiguration');
 const sql = require('mssql');
 const { getDBConfig } = require('./dbconfig');
-const { pull_queryjsUser, pull_queryvbWebScripts, pull_queryMonitores } = require ('./queries');
+const { pull_queryjsUser, pull_queryvbWebScripts, pull_queryMonitores, pull_queryObjetosEcra } = require ('./queries');
 
 const pullCommand = vscode.commands.registerCommand('csmanager.pull', function () {
     if (checkConfiguration()) {
@@ -24,9 +24,10 @@ async function showPullOptions() {
 
     const pickCategories = [
         //{ label: "Receber TODOS os scripts de Framework", id: "all"},
-        { label: "Javascript de Utilizador", id: "jsUser"},
-        { label: "Scripts Web (VB.NET)", id: "vbScriptsWeb"},
-        { label: "Monitores", id: "vbMonitores"}
+        { label: "Javascript de Utilizador", id: "jsUser", query: pull_queryjsUser},
+        { label: "Scripts Web (VB.NET)", id: "vbScriptsWeb", query: pull_queryvbWebScripts},
+        { label: "Monitores", id: "vbMonitores", query: pull_queryMonitores},
+        { label: "Objetos de Ecrã", id: "objetosEcra", query: pull_queryObjetosEcra}
     ];
 
     const selectedCategory = await vscode.window.showQuickPick(pickCategories, {
@@ -39,34 +40,12 @@ async function showPullOptions() {
     let pickScripts = [];
     let pScripts = [];
 
-    switch (selectedCategory.id) {
-        case "all":
-            break;
-        case "jsUser":
-            pickScripts = await listPullFiles(pull_queryjsUser);
-            
-            pScripts = await vscode.window.showQuickPick(pickScripts, {
-                placeHolder: "Javascript de Utilizador",
-                canPickMany: true,
-            });
-            break;
-        case "vbScriptsWeb":
-            pickScripts = await listPullFiles(pull_queryvbWebScripts);
-            
-            pScripts = await vscode.window.showQuickPick(pickScripts, {
-                placeHolder: "Scripts Web (VB.NET)",
-                canPickMany: true,
-            });
-            break;
-        case "vbMonitores":
-            pickScripts = await listPullFiles(pull_queryMonitores);
-            
-            pScripts = await vscode.window.showQuickPick(pickScripts, {
-                placeHolder: "Monitores",
-                canPickMany: true,
-            });
-            break;
-    }
+    pickScripts = await listPullFiles(selectedCategory.query);
+
+    pScripts = await vscode.window.showQuickPick(pickScripts, {
+        placeHolder: selectedCategory.label,
+        canPickMany: true,
+    });
 
     if (!pScripts) {
         showPullOptions();    
@@ -93,7 +72,7 @@ async function listPullFiles(query) {
             id: row.stamp,
             code: row.code.split('/@!barreira#bRrieR*>/'),
             folder: row.folder,
-            extension: row.extension,
+            extension: row.extension.split('/@!barreira#bRrieR*>/'),
             col: row.type.split('/@!barreira#bRrieR*>/')
         }));
 
@@ -135,7 +114,7 @@ function pullScripts(pScripts) {
             ensureDirectoryExists(scriptFolderPath, () => {
                 writeFile(idPath, "");
                 item.col.forEach((value, index) => {
-                    var filePath = path.join(scriptFolderPath, value + item.extension);
+                    var filePath = path.join(scriptFolderPath, value + item.extension[index]);
                     writeFile(filePath, item.code[index]);
                 });
             });
