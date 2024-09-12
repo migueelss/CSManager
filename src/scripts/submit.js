@@ -9,7 +9,10 @@ const mapTables = new Map([
     ["/javascriptUtilizador/", "jsu"],
     ["/vbScriptsWeb/", "escr"],
     ["/itensMonitor/", "emoi"],
-    ["/objetosEcra/", "epagc"]
+    ["/valoresDefeito/", "eudefs"],
+    ["/regras/", "ebrule"],
+    ["/opcoesEcra/", "etl"],
+    ["/eventos/", "eeventos"]
 ]);
 
 

@@ -10,7 +10,10 @@ const mapTables = new Map([
     ["/javascriptUtilizador/", "jsu"],
     ["/vbScriptsWeb/", "escr"],
     ["/itensMonitor/", "emoi"],
-    ["/objetosEcra/", "epagc"]
+    ["/valoresDefeito/", "eudefs"],
+    ["/regras/", "ebrule"],
+    ["/opcoesEcra/", "etl"],
+    ["/eventos/", "eeventos"]
 ]);
 
 const pushCommand = vscode.commands.registerCommand('csmanager.push', function () {
@@ -34,7 +37,10 @@ async function showPushOptions() {
         { label: "Javascript de Utilizador", id: "/javascriptUtilizador/"},
         { label: "Scripts Web (VB.NET)", id: "/vbScriptsWeb/"},
         { label: "Monitores", id: "/itensMonitor/"},
-        { label: "Objetos de Ecrã", id: "/objetosEcra/"}
+        { label: "Valores por Defeito", id: "/valoresDefeito/"},
+        { label: "Regras", id: "/regras/"},
+        { label: "Opções de Ecrã", id: "/opcoesEcra/"},
+        { label: "Eventos", id: "/eventos/"}
     ];
     
     const selectedCategory = await vscode.window.showQuickPick(pickCategories, {

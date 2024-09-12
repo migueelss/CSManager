@@ -4,7 +4,7 @@ const path = require('path');
 const { checkConfiguration } = require ('./checkConfiguration');
 const sql = require('mssql');
 const { getDBConfig } = require('./dbconfig');
-const { pull_queryjsUser, pull_queryvbWebScripts, pull_queryMonitores, pull_queryObjetosEcra } = require ('./queries');
+const { pull_queryjsUser, pull_queryvbWebScripts, pull_queryMonitores, pull_queryValoresDefeito, pull_queryRegras, pull_queryOpcoesEcra, pull_queryEventos } = require ('./queries');
 
 const pullCommand = vscode.commands.registerCommand('csmanager.pull', function () {
     if (checkConfiguration()) {
@@ -27,7 +27,10 @@ async function showPullOptions() {
         { label: "Javascript de Utilizador", id: "jsUser", query: pull_queryjsUser},
         { label: "Scripts Web (VB.NET)", id: "vbScriptsWeb", query: pull_queryvbWebScripts},
         { label: "Monitores", id: "vbMonitores", query: pull_queryMonitores},
-        { label: "Objetos de Ecrã", id: "objetosEcra", query: pull_queryObjetosEcra}
+        { label: "Valores por Defeito", id: "valoresDefeito", query: pull_queryValoresDefeito},
+        { label: "Regras", id: "regras", query: pull_queryRegras},
+        { label: "Opções de Ecrã", id: "opcoesEcra", query: pull_queryOpcoesEcra},
+        { label: "Eventos", id: "eventos", query: pull_queryEventos}
     ];
 
     const selectedCategory = await vscode.window.showQuickPick(pickCategories, {
